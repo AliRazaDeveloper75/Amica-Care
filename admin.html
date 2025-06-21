@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Submissions Viewer</title>
+  </head>
+  <style>
+    /* Grid Layout for Cards */
+    .entries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Card Styling */
+    .entry-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      background-color: white;
+    }
+
+    .entry-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .entry-id {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+
+    .entry-card div {
+      margin-bottom: 8px;
+    }
+
+    .entry-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .btn-view {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .btn-view:hover {
+      background-color: #45a049;
+    }
+
+    .btn-edit {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background-color: #0b7dda;
+    }
+
+    .btn-save {
+      background-color: #ff9800;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .btn-save:hover {
+      background-color: #e68a00;
+    }
+
+    /* Modal styles remain the same */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background-color: white;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-btn {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #ddd;
+      text-align: right;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+    }
+
+    .detail-row {
+      margin-bottom: 10px;
+    }
+
+    .detail-key {
+      font-weight: bold;
+      color: #555;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 300px;
+      margin-top: 15px;
+      font-family: monospace;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+  <body>
+    <div>
+      <h1>Form Submissions</h1>
+      <a href="form.html">
+        <button>User From Page</button>
+      </a>
+    </div>
+    <div id="entryContainer"></div>
+
+    <script>
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", renderEntries);
+
+     function renderEntries() {
+  const entryContainer = document.getElementById("entryContainer");
+  entryContainer.innerHTML = "";
+
+  // Create a grid container
+  const gridContainer = document.createElement("div");
+  gridContainer.className = "entries-grid";
+  entryContainer.appendChild(gridContainer);
+
+  const storedMap = JSON.parse(localStorage.getItem("amicaCareFormMap")) || {};
+  const entries = Object.entries(storedMap);
+
+  if (entries.length === 0) {
+    gridContainer.innerHTML = "<p>No submissions found.</p>";
+    return;
+  }
+
+  entries.forEach(([id, data]) => {
+    const entryCard = document.createElement("div");
+    entryCard.className = "entry-card";
+
+    entryCard.innerHTML = `
+      <div class="entry-id"><strong>ID:</strong> ${id}</div>
+      <div><strong>Name:</strong> ${data.fullName || "N/A"}</div>
+      <div><strong>Date:</strong> ${data.evaluationDate || "N/A"}</div>
+      <div><strong>Status:</strong> ${data.status || "N/A"}</div>
+      <div class="entry-actions"></div>
+    `;
+
+    const actionsDiv = entryCard.querySelector(".entry-actions");
+
+    // View Details Button
+    const viewDetailsBtn = document.createElement("button");
+    viewDetailsBtn.textContent = "View Details";
+    viewDetailsBtn.className = "btn-view";
+    viewDetailsBtn.onclick = () => showDetailsPopup(id, data);
+
+    // Full View & Edit Button
+    const fullViewBtn = document.createElement("button");
+    fullViewBtn.textContent = "Full View & Edit";
+    fullViewBtn.className = "btn-edit";
+    fullViewBtn.onclick = () => {
+      const editArea = document.createElement("textarea");
+      editArea.value = JSON.stringify(data, null, 2);
+
+      const saveBtn = document.createElement("button");
+      saveBtn.textContent = "Save Changes";
+      saveBtn.className = "btn-save";
+      saveBtn.onclick = () => {
+        try {
+          const updated = JSON.parse(editArea.value);
+          storedMap[id] = updated;
+          localStorage.setItem("amicaCareFormMap", JSON.stringify(storedMap));
+          alert("Entry updated successfully!");
+          renderEntries();
+        } catch (e) {
+          alert("Invalid JSON. Please fix the format.");
+        }
+      };
+
+      // Replace card content with edit area
+      entryCard.innerHTML = "";
+      entryCard.appendChild(editArea);
+      entryCard.appendChild(saveBtn);
+    };
+
+    actionsDiv.appendChild(viewDetailsBtn);
+    actionsDiv.appendChild(fullViewBtn);
+    gridContainer.appendChild(entryCard);
+  });
+}
+
+      function showDetailsPopup(id, data) {
+        // Create modal overlay
+        const overlay = document.createElement("div");
+        overlay.className = "modal-overlay";
+
+        // Create modal container
+        const modal = document.createElement("div");
+        modal.className = "modal";
+
+        // Create modal header
+        const header = document.createElement("div");
+        header.className = "modal-header";
+        header.innerHTML = `
+                <h3>Submission Details - ID: ${id}</h3>
+                <span class="close-btn">&times;</span>
+            `;
+
+        // Create modal body with formatted data
+        const body = document.createElement("div");
+        body.className = "modal-body";
+
+        // Format the data for display
+        let htmlContent = '<div class="details-grid">';
+        for (const [key, value] of Object.entries(data)) {
+          htmlContent += `
+                    <div class="detail-row">
+                        <div class="detail-key">${formatKey(key)}:</div>
+                        <div class="detail-value">${formatValue(value)}</div>
+                    </div>
+                `;
+        }
+        htmlContent += "</div>";
+        body.innerHTML = htmlContent;
+
+        // Create modal footer
+        const footer = document.createElement("div");
+        footer.className = "modal-footer";
+        footer.innerHTML = '<button class="btn-close">Close</button>';
+
+        // Assemble modal
+        modal.appendChild(header);
+        modal.appendChild(body);
+        modal.appendChild(footer);
+        overlay.appendChild(modal);
+
+        // Add to document
+        document.body.appendChild(overlay);
+
+        // Close handlers
+        const closeBtn = header.querySelector(".close-btn");
+        const closeFooterBtn = footer.querySelector(".btn-close");
+
+        const closeModal = () => document.body.removeChild(overlay);
+
+        closeBtn.onclick = closeModal;
+        closeFooterBtn.onclick = closeModal;
+        overlay.onclick = (e) => {
+          if (e.target === overlay) closeModal();
+        };
+      }
+
+      // Helper function to format keys for display
+      function formatKey(key) {
+        return key
+          .replace(/([A-Z])/g, " $1")
+          .replace(/^./, (str) => str.toUpperCase());
+      }
+
+      // Helper function to format values for display
+      function formatValue(value) {
+        if (value === null || value === undefined) return "N/A";
+        if (typeof value === "object") return JSON.stringify(value, null, 2);
+        return value;
+      }
+    </script>
+  </body>
+</html>

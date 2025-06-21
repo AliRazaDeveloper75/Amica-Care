@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amica Care User Form</title>
+    <link rel="stylesheet" href="form.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Amica Care Italia - User Evaluation Form</h2>
+      <a href="admin.html">
+        <button>Go to Admin Page</button>
+      </a>
+      <form id="careForm">
+        <label
+          >Date of Evaluation:
+          <input type="date" name="evaluationDate" required />
+        </label>
+        <label
+          >Surname & Name:
+          <input type="text" name="fullName" required />
+        </label>
+        <label
+          >Address:
+          <input type="text" name="address" required />
+        </label>
+        <label
+          >Contact:
+          <input type="text" name="contact" required />
+        </label>
+        <label
+          >Family Reference:
+          <input type="text" name="familyReference" />
+        </label>
+
+        <div class="section">
+          <h3>Status</h3>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="status" value="Self-sufficient" />
+              Self-sufficient</label
+            >
+            <label
+              ><input type="radio" name="status" value="Not sufficient" /> Not
+              sufficient</label
+            >
+            <label
+              ><input type="radio" name="status" value="Semi-sufficient" />
+              Semi-sufficient</label
+            >
+          </div>
+          <label>Age: <input type="number" name="age" /></label>
+          <label>Weight (kg): <input type="number" name="weight" /></label>
+        </div>
+
+        <div class="section">
+          <h3>Medical Diagnosis</h3>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="diseases" value="Alzheimer" />
+              Alzheimer</label
+            >
+            <label
+              ><input type="checkbox" name="diseases" value="Dementia" />
+              Dementia</label
+            >
+            <label
+              ><input type="checkbox" name="diseases" value="Parkinson" />
+              Parkinson</label
+            >
+            <label
+              ><input type="checkbox" name="diseases" value="Diabetes" />
+              Diabetes</label
+            >
+            <label
+              ><input type="checkbox" name="diseases" value="Pneumonia" />
+              Pneumonia</label
+            >
+          </div>
+          <label
+            >Other Diseases:
+            <input type="text" name="otherDiseases" />
+          </label>
+        </div>
+
+        <div class="section">
+          <h3>Mental State</h3>
+          <div class="radio-group">
+            <label><input type="radio" name="mental" value="No" /> No</label>
+            <label
+              ><input type="radio" name="mental" value="A little" /> A
+              little</label
+            >
+            <label><input type="radio" name="mental" value="Yes" /> Yes</label>
+            <label
+              ><input type="radio" name="mental" value="Lucid" /> Lucid</label
+            >
+          </div>
+
+          <h3>Physical Assistance</h3>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="physicalAssistance" value="No" />
+              No</label
+            >
+            <label
+              ><input type="radio" name="physicalAssistance" value="A little" />
+              A little</label
+            >
+            <label
+              ><input type="radio" name="physicalAssistance" value="Yes" />
+              Yes</label
+            >
+            <label
+              ><input type="radio" name="physicalAssistance" value="Full" />
+              Full</label
+            >
+          </div>
+
+          <h3>Mobility Aids</h3>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="mobility" value="Wheelchair" />
+              Wheelchair</label
+            >
+            <label
+              ><input type="checkbox" name="mobility" value="Walker" />
+              Walker</label
+            >
+            <label
+              ><input type="checkbox" name="mobility" value="Hoist" />
+              Hoist</label
+            >
+            <label
+              ><input type="checkbox" name="mobility" value="Stairlift" />
+              Stairlift</label
+            >
+            <label
+              ><input type="checkbox" name="mobility" value="Other" />
+              Other</label
+            >
+          </div>
+
+          <h3>Living Situation</h3>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="living" value="Alone" /> Alone</label
+            >
+            <label
+              ><input type="radio" name="living" value="With spouse" /> With
+              spouse</label
+            >
+            <label
+              ><input type="radio" name="living" value="With children" /> With
+              children</label
+            >
+            <label
+              ><input type="radio" name="living" value="Other" /> Other</label
+            >
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Personal Care Assistance</h3>
+          <label
+            >Diaper:
+            <select name="diaper">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label
+            >Catheter:
+            <select name="catheter">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label
+            >Stoma:
+            <select name="stoma">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+
+          <div class="checkbox-group">
+            <label
+              ><input
+                type="checkbox"
+                name="personalCare"
+                value="Personal hygiene"
+              />
+              Personal hygiene</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="personalCare"
+                value="Toilet assistance"
+              />
+              Toilet assistance</label
+            >
+            <label
+              ><input type="checkbox" name="personalCare" value="Showering" />
+              Showering</label
+            >
+            <label
+              ><input type="checkbox" name="personalCare" value="Dressing" />
+              Dressing</label
+            >
+            <label
+              ><input type="checkbox" name="personalCare" value="Other" />
+              Other</label
+            >
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Nighttime Assistance</h3>
+          <label
+            >Night Presence:
+            <select name="night">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label
+            >Monitoring Required:
+            <select name="nightPresence">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label>Other Needs: <input type="text" name="nightOther" /></label>
+
+          <h3>Food Assistance</h3>
+          <label
+            >Cooking:
+            <select name="cooking">
+              <option>Yes</option>
+              <option>No</option>
+              <option>Mashed</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Eating Assistance:
+            <select name="eating">
+              <option>Yes</option>
+              <option>No</option>
+              <option>PEG</option>
+              <option>Other</option>
+            </select></label
+          >
+        </div>
+
+        <div class="section">
+          <h3>Medication Assistance</h3>
+          <label
+            >Assistance & Recording:
+            <select name="medAssist">
+              <option>Yes</option>
+              <option>No</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Presence & Monitoring:
+            <select name="medMonitor">
+              <option>Yes</option>
+              <option>No</option>
+              <option>Other</option>
+            </select></label
+          >
+        </div>
+
+        <div class="section">
+          <h3>Household Help</h3>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="cleaning" value="Patient Room" />
+              Patient Room</label
+            >
+            <label
+              ><input type="checkbox" name="cleaning" value="Living Room" />
+              Living Room</label
+            >
+            <label
+              ><input type="checkbox" name="cleaning" value="Kitchen" />
+              Kitchen</label
+            >
+            <label
+              ><input type="checkbox" name="cleaning" value="Bathroom" />
+              Bathroom</label
+            >
+            <label
+              ><input type="checkbox" name="cleaning" value="Other" />
+              Other</label
+            >
+          </div>
+          <label
+            >Dishwashing: <input type="checkbox" name="laundry" value="Dishes"
+          /></label>
+          <label
+            >Laundry: <input type="checkbox" name="laundry" value="Clothes"
+          /></label>
+          <label
+            >Ironing:
+            <select name="ironing">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label
+            >Pets:
+            <select name="pets">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+        </div>
+
+        <div class="section">
+          <h3>Location and Transportation</h3>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="location" value="Single House" />
+              Single House</label
+            >
+            <label
+              ><input type="checkbox" name="location" value="Apartment" />
+              Apartment</label
+            >
+            <label
+              ><input type="checkbox" name="location" value="Villa" />
+              Villa</label
+            >
+            <label
+              ><input type="checkbox" name="location" value="Other" />
+              Other</label
+            >
+          </div>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="area" value="City Center" /> City
+              Center</label
+            >
+            <label
+              ><input type="checkbox" name="area" value="City" /> City</label
+            >
+            <label
+              ><input type="checkbox" name="area" value="Countryside" />
+              Countryside</label
+            >
+            <label
+              ><input type="checkbox" name="area" value="Other" /> Other</label
+            >
+          </div>
+          <label
+            >Transport Options:
+            <input
+              type="text"
+              name="transport"
+              placeholder="e.g. Bus, Train, Distance"
+          /></label>
+        </div>
+
+        <div class="section">
+          <h3>Worker Accommodation</h3>
+          <label
+            >Safety and Privacy Guaranteed:
+            <select name="safety">
+              <option>Yes</option>
+              <option>No</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Room:
+            <select name="room">
+              <option>Yes</option>
+              <option>No</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Bathroom:
+            <select name="bathroom">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+          <label
+            >Furniture:
+            <select name="furniture">
+              <option>Yes</option>
+              <option>No</option>
+            </select></label
+          >
+        </div>
+
+        <div class="section">
+          <h3>Working Period and Schedule</h3>
+          <label>Working Days: <input type="text" name="days" /></label>
+          <label>Schedule: <input type="text" name="schedule" /></label>
+          <label>Break (hours): <input type="text" name="break" /></label>
+        </div>
+
+        <div class="section">
+          <label
+            >General Notes or Challenges:
+            <textarea name="notes" rows="4"></textarea>
+          </label>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script src="form.js"></script>
+  </body>
+</html>
